@@ -14,10 +14,10 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 sys.setrecursionlimit(2000)
 
-wp_url = "http://127.0.0.1/wp-json/wp/v2/posts"
-wp_url_tags = "http://127.0.0.1/wp-json/wp/v2/tags"
-username = "simael"
-password = "123456"
+wp_url = "http://www.zizaicloud.com/wp-json/wp/v2/posts"
+wp_url_tags = "http://www.zizaicloud.com/wp-json/wp/v2/tags"
+username = "admin"
+password = "Yun@201q"
 # ready_cate_id = "4"
 ready_cate_id = "11"
 wp_data = {}
@@ -40,7 +40,7 @@ root_url = 'http://blog.csdn.net'
 # var = 'this is a var in'
 # print(Crawl_helper_tools_url.testfunction(var))
 
-headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0','Referer' : 'http:www.share345.com'}
+headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0','Referer' : 'http://www.zizaicloud.com'}
 
 crawl_url = Crawl_helper_tools_url(url,root_url)
 html = crawl_url.getCurl(url,{},headers)
@@ -64,6 +64,9 @@ i = 1
 #   TODO 分析每页循环取出每篇文章的内容等
 
 while(i <= int(page)):
+
+    print "===in while " + str(i) + " ===="
+
     # http://blog.csdn.net/m0sh1/article/list/1
     next_page_url = url + '/article/list/' + str(i)
     # 重新获取 新的 tree
@@ -106,6 +109,7 @@ while(i <= int(page)):
     for n in real_page_list:
         try:
             print n
+            print "====iterate n, the last line is n===="
             parse_page = Crawl_helper_parse_page(n)
             try:
                 page_title = parse_page.getTitle_soup(n,{},headers)
@@ -166,11 +170,11 @@ while(i <= int(page)):
             # todo 爬虫 添加至 github
             # todo 源代码 带有 script 在 wp中显示有问题
 
-            # print('创建文章 参数')
+            print('===创建文章 参数===')
             # print(wp_data)
-            res = Crawl_helper_tools_url.http_auth(username,password,wp_url,wp_data,wp_headers)
-            if (res == "fail"):
-                print("添加失败")
+            # res = Crawl_helper_tools_url.http_auth(username,password,wp_url,wp_data,wp_headers)
+            # if (res == "fail"):
+            #     print("添加失败")
             # sys.exit()
 
         except Exception , e:

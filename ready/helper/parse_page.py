@@ -81,21 +81,14 @@ class Crawl_helper_parse_page:
 
         self.html = response
         soup = BeautifulSoup(self.html,"lxml")
-        title_parent = soup.find("span","link_title").contents[0].contents
-        # print(len(title_parent))
+        title = soup.find("div","wznr").h2.string
+        # print(title)
 
-        '''
-        title = soup.title.string
-        print(title)
-        '''
-
-        if (len(title_parent) > 1):
-            title = soup.find("span","link_title").contents[0].contents[2]
+        if (title):
+            return  title
         else:
-            title = soup.find("span","link_title").contents[0].contents[0]
+            return "title not found!"
 
-        title = title.strip()
-        return title
     def getTag(self,url = '',data = {},headers = {}):
         return ['tag1','tag2']
         pass
@@ -132,6 +125,43 @@ class Crawl_helper_parse_page:
         return 'content'
         pass
 
+    def parseContent(self, content = ''):
+        constr = str(content)
+        pos = constr.find("<br/>\n<p")
+        if ( pos >= 0):
+            #print pos
+            constr = constr[pos + 6:]
+
+        # Check which one is in front, trim from that one 
+        list1 = []
+
+        pos = constr.find("<p>【编辑推荐】")
+        if (pos > 0): list1.append(pos)
+        pos = constr.find("<p>【参会报名】")
+        if (pos > 0): list1.append(pos)
+        pos = constr.find("<p>【51CTO")
+        if (pos > 0): list1.append(pos)
+        pos = constr.find("<a class=\"dzdz\"")
+        if (pos > 0): list1.append(pos)
+
+        if (list1):
+            pos = min(list1)
+        else:
+            pos = -1
+
+        # pos2 = constr.find("<p>【参会报名】")
+        # if (pos1 > 0 and pos2 > 0):
+        #     pos = (pos1 > pos2 and pos2 or pos1)
+        # elif (pos1 == -1 and pos2 == -1):
+        #     pos = -1
+        # else:
+        #      pos = (pos1 > pos2 and pos1 or pos2)
+           
+        if (pos > 0):
+            #print pos
+            constr = constr[0 : pos - 1]
+        return constr
+
     def getContent_soup(self,url = '',data = {},headers = {}):
         if (self.html):
             response = self.html
@@ -145,7 +175,12 @@ class Crawl_helper_parse_page:
 
         self.html = response
         soup = BeautifulSoup(self.html,"lxml")
-        contents = soup.find("div","article_content")
+        contents = soup.find("div","zwnr")
 
-        return  contents
+        if (contents):
+            return  self.parseContent(contents)
+        else:
+            return "content not found!"
+
+
 

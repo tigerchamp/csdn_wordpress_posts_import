@@ -21,12 +21,16 @@ class Crawl_helper_tools_url:
     @staticmethod
     def getCurl(url,data = {},headers = {}):
         # data - dict
-        if (not data):
+        if (data):
             data = urllib.urlencode(data)
             url = url + '?' + data
-        request = urllib2.Request(url, '', headers)
+        if (headers):
+            request = urllib2.Request(url, '', headers)
+        else:
+            request = urllib2.Request(url)
+
         try:
-            response = urllib2.urlopen(request,timeout=2)
+            response = urllib2.urlopen(request,timeout=10)
         except socket.timeout:
             print('except time time time time out')
             return 'fail'
@@ -82,19 +86,19 @@ class Crawl_helper_tools_url:
 
         auth = base64.b64encode(username+ ':'+ password)
         headers["Authorization"] = "Basic "+ auth
-
+        #print headers
         # data - dict
         data = urllib.urlencode(data)
         #req = urllib2.Request(url, data)
         req = urllib2.Request(url, data, headers)
         #response = urllib2.urlopen(req)
         try:
-            response = urllib2.urlopen(req,timeout=5)
+            response = urllib2.urlopen(req,timeout=30)
         except socket.timeout:
-            #print('except time out')
+            print('except time out')
             return 'fail'
         except Exception , e:
-            #print Exception,":",e
+            print Exception,":",e
             #print('except open URL time out')
             return 'fail'
 
