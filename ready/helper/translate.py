@@ -5,15 +5,19 @@ import hashlib
 import json  
 import random  
   
-  
+# Translate  Chinese words to Pinyin
 class Baidu_Translation:  
     def __init__(self):  
         self._q = 'Welcome'  
         self._from = 'zh'
         self._to = 'en'
-        self._appid = 2018010900xxxxx
-        self._key = 'WlB9BcKQ8Rp********'
+
+        ### Change this before committing ###
+        self._appid = 20180109000113413  
+        self._key = 'WlB9BcKQ8Rp2bT8CyvAG'  
         self._salt = random.randint(10001,99999)
+        ### Change this before committing ###
+       
         self._sign = ''
         self._dst = ''
         self._enable = True  

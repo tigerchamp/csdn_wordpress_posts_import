@@ -10,14 +10,15 @@ import json
 
 # todo 尝试使用 scrapy
 
+# This is the sample, the script in use is test.py
 reload(sys)
 sys.setdefaultencoding('utf8')
 sys.setrecursionlimit(2000)
 
 wp_url = "http://www.zizaicloud.com/wp-json/wp/v2/posts"
 wp_url_tags = "http://www.zizaicloud.com/wp-json/wp/v2/tags"
-username = "admin"
-password = "Yun@201q"
+username = "****"
+password = "*****"
 # ready_cate_id = "4"
 ready_cate_id = "11"
 wp_data = {}
